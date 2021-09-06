@@ -1,0 +1,3 @@
+---
+# vars file for asdf
+asdf_git_repo: "https://github.com/asdf-vm/asdf.git"

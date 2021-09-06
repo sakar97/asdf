@@ -1,0 +1,13 @@
+---
+ - hosts: target
+   become: yes
+   roles:
+     - role: asdf
+       asdf_plugins:
+         - name: "nodejs"
+           versions:         
+              - "lts-dubnium"
+              - "lts-fermium"
+              - 16.0.0
+           global: "lts-dubnium"
+       user: root

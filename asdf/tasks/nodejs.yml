@@ -1,0 +1,11 @@
+---
+- name: "install nodejs dependencies with apt"
+  apt:
+    name: "{{ asdf_apt_nodejs_dependencies }}"
+    install_recommends: no
+    cache_valid_time: 4000
+  retries: 3
+  register: apt_nodejs_result
+  until: apt_nodejs_result is succeeded
+  become: True
+  when: ansible_os_family == "Debian"

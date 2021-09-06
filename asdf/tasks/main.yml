@@ -1,0 +1,12 @@
+---
+# tasks file for asdf
+- name: "install asdf"
+  import_tasks: "install.yml"
+
+- name: "remove any existing node binaries"
+  apt:
+   name: nodejs
+   state: absent
+
+- name: "install plugins"
+  import_tasks: "plugin.yml"

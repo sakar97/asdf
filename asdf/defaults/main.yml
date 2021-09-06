@@ -1,0 +1,8 @@
+---
+# defaults file for asdf
+asdf_version: "v0.8.1"
+user: "jenkins"
+asdf_global_dependencies: ["unzip", "git", "curl", "autoconf", "automake", "gcc", "g++", "make", "patch", "pkg-config", "binutils", "libtool", "bison", "libreadline-dev"]
+asdf_plugins: []
+asdf_apt_nodejs_dependencies: ["gpg", "dirmngr","curl","gawk"]
+asdf_legacy_version_file: "yes"

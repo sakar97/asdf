@@ -1,0 +1,43 @@
+---
+- name: "get users HOME directory"
+  getent:
+    database: passwd
+    key: "{{ user }}"
+    split: ":"
+
+- name: "set user_home variable"
+  set_fact:
+    "asdf_user_home": "{{ getent_passwd[user][4] }}"
+  register: asdf_user
+
+- name: debug the asdf_user
+  debug:
+    msg: "{{asdf_user}} {{asdf_user_home}}"
+
+- name: "install asdf global dependencies with apt"
+  apt:
+    name: "{{ asdf_global_dependencies }}"
+    install_recommends: no
+    cache_valid_time: 4000
+  become: True
+  retries: 3
+  register: apt_deps_result
+  until: apt_deps_result is succeeded
+  when: ansible_os_family == "Debian"
+
+- name: "download asdf"
+  git:
+    repo: "{{asdf_git_repo}}"
+    dest: "{{ asdf_user_home }}/.asdf"
+    version: "{{ asdf_version }}"
+  become: True
+  become_user: "{{ user }}"
+
+- name: "source asdf script"
+  template:
+    src: "asdf.sh.j2"
+    dest: "/etc/profile.d/asdf.sh"
+    owner: "root"
+    group: "root"
+    mode: 0755
+  become: True
